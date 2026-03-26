@@ -1,7 +1,9 @@
-﻿namespace ConnectPlus.WebAPI.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ConnectPlus.WebAPI.DTO;
+
+public class TipoContatoDTO
 {
-    public class TipoContatoDTO
-    {
-        public string Titulo {  get; set; }
-    }
+    [Required(ErrorMessage = "O titulo do tipo contato é obrigatoria")]
+    public string? Titulo {  get; set; }
 }

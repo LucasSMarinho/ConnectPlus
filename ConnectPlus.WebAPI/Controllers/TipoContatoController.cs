@@ -17,6 +17,10 @@ namespace ConnectPlus.WebAPI.Controllers
             _tipoContatoRepository = tipoContatoRepository;
         }
 
+        /// <summary>
+        /// Endpoint da API que faz chamado ao metodo de de listar os tipos de contato
+        /// </summary>
+        /// <returns>Retorna Status Code 200 e a lista dos tipos de contato</returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,6 +35,11 @@ namespace ConnectPlus.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Id do</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
@@ -45,6 +54,11 @@ namespace ConnectPlus.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Endpoint da API que faz chamado ao metodo de cadastrar um tipo de usuario
+        /// </summary>
+        /// <param name="tipoContato">Dados do tipo contato</param>
+        /// <returns>Retorna StatusCode 201 e o novo tipo contato</returns>
         [HttpPost]
         public IActionResult Post(TipoContatoDTO tipoContato)
         {
@@ -52,7 +66,7 @@ namespace ConnectPlus.WebAPI.Controllers
             {
                 var novoTipoContato = new TipoContato
                 {
-                    Titulo = tipoContato.Titulo
+                    Titulo = tipoContato.Titulo!
                 };
 
                 _tipoContatoRepository.Cadastrar(novoTipoContato);
@@ -65,6 +79,12 @@ namespace ConnectPlus.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Endpoint da API que faz chamado ao metodo de atualizar um
+        /// </summary>
+        /// <param name="id">Id do tipo contato que será atualizado</param>
+        /// <param name="tipoContato">Novos dados do tipo contato</param>
+        /// <returns>Retorna Status Code 201 e o novo tipo contato</returns>
         [HttpPut]
         public IActionResult Put(Guid id, TipoContatoDTO tipoContato)
         {
@@ -72,11 +92,11 @@ namespace ConnectPlus.WebAPI.Controllers
             {
                 var novoTipoContato = new TipoContato
                 {
-                    Titulo = tipoContato.Titulo
+                    Titulo = tipoContato.Titulo!
                 };
 
                 _tipoContatoRepository.Atualizar(id, novoTipoContato);
-                return StatusCode(201, novoTipoContato);
+                return StatusCode(201, _tipoContatoRepository.BuscarPorId(id));
             }
             catch (Exception erro)
             {
@@ -85,6 +105,11 @@ namespace ConnectPlus.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Endpoint da API que faz chamado ao metodo de deletar um tipo de contato
+        /// </summary>
+        /// <param name="id">Id do tipo de contato que será deletado</param>
+        /// <returns>retorna no content</returns>
         [HttpDelete]
         public IActionResult Deletar(Guid id)
         {
